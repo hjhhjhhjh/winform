@@ -40,12 +40,17 @@ namespace WindowsFormsApplication1
 
             this.panel1.Controls.Add(browser);
 
-            //browser.JavascriptObjectRepository.Register("",)
+            browser.JavascriptObjectRepository.Register("showKeyBoard", new KeyBoard(),true, new CefSharp.BindingOptions { CamelCaseJavascriptNames = false });
 
             if (isFullScreen)
             {
                 FullScreen();
             }
+        }
+
+        private void ShowKeyBoard()
+        {
+
         }
 
         private void FullScreen()
