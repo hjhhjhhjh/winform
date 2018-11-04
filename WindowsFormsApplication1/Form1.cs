@@ -19,9 +19,14 @@ namespace WindowsFormsApplication1
     {
         private ChromiumWebBrowser browser;
 
+        //是否全屏
+        bool isFullScreen = Boolean.Parse(System.Configuration.ConfigurationSettings.AppSettings["isFullScreen"]);
+
+        string homePageUrl = System.Configuration.ConfigurationSettings.AppSettings["homeUrl"];
+
         public Form1()
         {
-            
+
             InitializeComponent();
             CefSharp.Cef.Initialize();
 
@@ -32,13 +37,27 @@ namespace WindowsFormsApplication1
             browser.CreateControl();
 
             browser.LifeSpanHandler = new OpenPageSelf();
+
             this.panel1.Controls.Add(browser);
 
+            //browser.JavascriptObjectRepository.Register("",)
+
+            if (isFullScreen)
+            {
+                FullScreen();
+            }
+        }
+
+        private void FullScreen()
+        {
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            browser.Load("http://zwfw.sd.gov.cn");
+            browser.Load(homePageUrl);
         }
 
         private void button2_Click(object sender, EventArgs e)
