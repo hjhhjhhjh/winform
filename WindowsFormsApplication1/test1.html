@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>hello</h1>
+    <input type="text" />
+    <input type="button" id="showButton" value="显示输入法" />
+
+    <script>
+        document.getElementById("showButton").onclick = function () {
+
+            //boundAsync.ShowKeyBoard();
+            boundAsync.showMessage('Message from JS');
+            return;
+
+            if (typeof bound == "undefined") {
+                alert("bound参数未初始化")
+                return;
+            }else{
+                alert("bound参数正常")
+                bound.ShowKeyBoard();
+                return;
+            }
+
+            //showKeyBoard.FindComputerInfo(function (data) { alert(data); });
+            if (typeof jsObj == "undefined") {
+                alert("jsObj参数未初始化")
+                return;
+            }
+            jsObj.MessageText = "我是js";
+            jsObj.ShowTest();
+
+        };
+
+
+
+    </script>
+    
+    <script type="text/javascript">
+        (async function() {
+            if(typeof CefSharp == "undefined"){
+                alert("CefSharp参数未初始化")
+                return;
+            }
+        await CefSharp.BindObjectAsync("boundAsync", "bound");
+
+        //boundAsync.showMessage('Message from JS');
+    })();
+    </script>
+   
+
+</body>
+</html>
