@@ -9,31 +9,31 @@
     <h1>hello</h1>
     <input type="text" />
     <input type="button" id="showButton" value="显示输入法" />
+    <input type="button" id="showPY" value="显示拼音输入法" />
+    <input type="button" id="showSX" value="显示手写输入法" />
+    <input type="button" id="showClose" value="关闭输入法" />
 
     <script>
         document.getElementById("showButton").onclick = function () {
 
             //boundAsync.ShowKeyBoard();
-            boundAsync.showMessage('Message from JS');
+            boundAsync.showMessage('kb');
             return;
+        };
 
-            if (typeof bound == "undefined") {
-                alert("bound参数未初始化")
-                return;
-            }else{
-                alert("bound参数正常")
-                bound.ShowKeyBoard();
-                return;
-            }
+        document.getElementById("showPY").onclick = function () {
+            boundAsync.showMessage('py');
+            return;
+        };
 
-            //showKeyBoard.FindComputerInfo(function (data) { alert(data); });
-            if (typeof jsObj == "undefined") {
-                alert("jsObj参数未初始化")
-                return;
-            }
-            jsObj.MessageText = "我是js";
-            jsObj.ShowTest();
+        document.getElementById("showSX").onclick = function () {
+            boundAsync.showMessage('sx');
+            return;
+        };
 
+        document.getElementById("showClose").onclick = function () {
+            boundAsync.showMessage('close');
+            return;
         };
 
 

@@ -18,6 +18,11 @@ namespace WindowsFormsApplication1
         [DllImport("controllerApi.dll", EntryPoint = "IMEShow", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         private static extern void IMEShow();
 
+        [DllImport("controllerApi.dll", EntryPoint = "IMESetMode", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        private static extern void IMESetMode(StringBuilder mode);
+
+        [DllImport("controllerApi.dll", EntryPoint = "IMEClose", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        private static extern void IMEClose();
 
         string path = System.Configuration.ConfigurationSettings.AppSettings["srfPath"];
 
@@ -27,7 +32,21 @@ namespace WindowsFormsApplication1
             IMEShow();
         }
 
+        public void ShowPy()
+        {
+            IMESetMode(new StringBuilder("py26"));
+            IMEShow();
+        }
 
+        public void ShowSx()
+        {
+            IMESetMode(new StringBuilder("hw26"));
+            IMEShow();
+        }
+
+        public void Close() {
+            IMEClose();
+        }
 
     }
 }

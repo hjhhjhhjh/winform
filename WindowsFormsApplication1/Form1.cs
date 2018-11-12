@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp.WinForms;
-using Update.Controls;
-using Update.Net;
 using CefSharp.WinForms.Internals;
 using CefSharp;
 
@@ -17,6 +15,8 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        //log4net.ILog log = log4net.LogManager.GetLogger("Form1");
+
         private ChromiumWebBrowser browser;
 
         //是否全屏
@@ -26,6 +26,8 @@ namespace WindowsFormsApplication1
 
         public Form1()
         {
+            //log.Info("form1初始化");
+            Log4Helper.Info(this.GetType(), "form1初始化");
 
             InitializeComponent();
 
@@ -55,7 +57,7 @@ namespace WindowsFormsApplication1
 
 
 
-            browser.JavascriptObjectRepository.Register("bound", new KeyBoard(), true);
+            //browser.JavascriptObjectRepository.Register("bound", new KeyBoard(), true);
 
             browser.JavascriptObjectRepository.Register("boundAsync", new BoundObject(), true);
 
@@ -71,10 +73,10 @@ namespace WindowsFormsApplication1
 
             //new KeyBoard().ShowKeyBoard();
         }
-        
-   
-   
-        
+
+
+
+
 
         private void FullScreen()
         {
@@ -101,8 +103,31 @@ namespace WindowsFormsApplication1
     {
         public void showMessage(string msg)
         {
-            //MessageBox.Show(msg);
-            new KeyBoard().ShowKeyBoard();
+            switch (msg)
+            {
+                case "kb":
+                    {
+                        new KeyBoard().ShowKeyBoard();
+                        break;
+                    }
+                case "py":
+                    {
+                        new KeyBoard().ShowPy();
+                        break;
+                    }
+                case "sx":
+                    {
+                        new KeyBoard().ShowSx();
+                        break;
+                    }
+                case "close":
+                    {
+                        new KeyBoard().Close();
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
     }
 
