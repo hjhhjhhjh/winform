@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CefSharp.WinForms;
 using CefSharp.WinForms.Internals;
 using CefSharp;
+using AutoUpdaterDotNET;
 
 namespace WindowsFormsApplication1
 {
@@ -87,13 +88,21 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //回首页
             browser.Load(homePageUrl);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //后退
             CefSharp.WebBrowserExtensions.Back(browser);
-            //browser.Back();
+            browser.Back();
+        }
+
+        private void checkUpdate()
+        {
+            //AutoUpdater.Mandatory = true;
+            //AutoUpdater.Start("https://rbsoft.org/updates/AutoUpdaterTest.xml");
         }
     }
 
