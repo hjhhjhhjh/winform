@@ -25,6 +25,10 @@ namespace WindowsFormsApplication1
 
         string homePageUrl = System.Configuration.ConfigurationSettings.AppSettings["homeUrl"];
 
+        string[] NoResetSizeUrls = System.Configuration.ConfigurationSettings.AppSettings["NoResetSizeUrls"].Split(',');
+
+        double ResetSize = Double.Parse(System.Configuration.ConfigurationSettings.AppSettings["ResetSize"]);
+
         public Form1()
         {
             //log.Info("form1初始化");
@@ -45,13 +49,15 @@ namespace WindowsFormsApplication1
             //CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             ///初始化
             //CefSharp.Cef.Initialize(setting);
+
+
             CefSharp.Cef.Initialize();
+            Cef.EnableHighDPISupport();
 
             //browser = new ChromiumWebBrowser("http://www.baidu.com");
             browser = new ChromiumWebBrowser(homePageUrl);
             browser.Dock = DockStyle.Fill;
             //browser.Load("http://www.baidu.com");]
-
 
 
             browser.LifeSpanHandler = new OpenPageSelf();
@@ -73,9 +79,68 @@ namespace WindowsFormsApplication1
             }
 
             //new KeyBoard().ShowKeyBoard();
+
+            //browser.SetZoomLevel(2.0);
+
+            //browser.FrameLoadStart += (o, e) => NowBrowserAddress.Contains("zwfw.sd.gov.cn")?browser.SetZoomLevel(2):return; ;
+            browser.FrameLoadStart += Browser_FrameLoadStart;
+            browser.AddressChanged += Browser_AddressChanged;
+
         }
 
+        private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
+        {
+            //如果是属于不需要重置的地址,就直接返回
+            for (int i = 0; i < NoResetSizeUrls.Length; i++)
+            {
+                if (NowBrowserAddress.Contains(NoResetSizeUrls[i]))
+                {
+                    browser.SetZoomLevel(1);
+                    return;
+                }
+            }
 
+            browser.SetZoomLevel(ResetSize);
+        }
+
+        string NowBrowserAddress = "";
+
+        private void Browser_AddressChanged(object sender, AddressChangedEventArgs e)
+        {
+            NowBrowserAddress = e.Address;
+        }
+
+        private void SetBtnLocationAndSize(Button btn, int i)
+        {
+            int sizeW = (this.Width / 30);
+
+            if (i == 1)
+            {
+                Point p = new Point();
+                p.X = this.Width - 3 * sizeW - sizeW / 4;
+                p.Y = sizeW / 2;
+                btn.Location = p;
+            }
+
+            if (i == 2)
+            {
+                Point p = new Point();
+                p.X = this.Width - 2 * sizeW;
+                p.Y = sizeW / 2;
+                btn.Location = p;
+            }
+
+
+
+            SetBtnSize(btn);
+        }
+
+        private void SetBtnSize(Button btn)
+        {
+            int sizeW = (this.Width / 30);
+            btn.Width = sizeW;
+            btn.Height = sizeW;
+        }
 
 
 
@@ -103,6 +168,12 @@ namespace WindowsFormsApplication1
         {
             //AutoUpdater.Mandatory = true;
             //AutoUpdater.Start("https://rbsoft.org/updates/AutoUpdaterTest.xml");
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            SetBtnLocationAndSize(button1, 2);
+            SetBtnLocationAndSize(button2, 1);
         }
     }
 
