@@ -175,6 +175,20 @@ namespace WindowsFormsApplication1
             SetBtnLocationAndSize(button1, 2);
             SetBtnLocationAndSize(button2, 1);
         }
+
+        //点下时按钮为灰色
+        private void button3_MouseDown(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = Color.Gray;
+
+        }
+
+        //松开时按钮颜色恢复
+        private void button3_MouseUp(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128))))); ;
+
+        }
     }
 
 
